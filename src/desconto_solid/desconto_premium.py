@@ -2,4 +2,4 @@ from desconto import Desconto
 
 class DescontoPremium(Desconto):
     def calcular(self, valor):
-        return valor * 0.3
+        return valor * 0.3  # 30% de desconto
