@@ -1,15 +1,13 @@
-import sys
-
 import pygame
 
-from src.alien import Alien
-from src.bullet import Bullet
-from src.settings import Settings
-from src.ship import Ship
 from src.bullet_manager import BulletManager
 from src.fleet_manager import FleetManager
 from src.game_events import GameEventHandler
 from src.game_renderer import GameRenderer
+from src.settings import Settings
+from src.ship import Ship
+from src.fast_alien import FastAlien
+
 
 class AlienInvasion:
     """Gerencia o jogo e seus comportamentos."""
@@ -31,7 +29,7 @@ class AlienInvasion:
         self.bg_color = self.settings.bg_color
 
         self.bullet_manager = BulletManager(self.screen, self.settings, self.ship)
-        self.fleet_manager = FleetManager(self.screen, self.settings, self.ship)
+        self.fleet_manager = FleetManager(self.screen, self.settings, self.ship, FastAlien)
         self.event_handler = GameEventHandler(self.ship, self.bullet_manager)
         self.renderer = GameRenderer(
             self.screen,
@@ -48,15 +46,14 @@ class AlienInvasion:
         self.fleet_manager._update_aliens()
 
     def run_game(self) -> None:
-        """Cria um laço de repetição para a tela sempre ficar visível até
-        que o usuário decida fechar a janela."""
-
-        self.fleet_manager.create_fleet() # Cria a frota de alienígenas para ser desenhada na tela
+        """Cria um laço de repetição para a tela sempre ficar visível até que o usuário decida fechar a janela."""
+        self.fleet_manager.create_fleet()  # Cria a frota de alienígenas para ser des
 
         while True:
             self.event_handler._check_events()
             self._update_game_state()
             self.renderer._render_screen()
+
 
 if __name__ == "__main__":
     alien_invasion = AlienInvasion()
